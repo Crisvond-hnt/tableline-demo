@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "live": false,
+  "provider": "thefork",
+  "fixture_contract": "tableline-thefork-fixture-v1",
+  "note": "Written for the demo. Not a body from api.thefork.io.",
+  "provider_event_id": "tf-evt-2201-created",
+  "kind": "created",
+  "reservation_id": "TF-2201",
+  "received_at": "2026-11-14T16:20:00+00:00",
+  "service_date": "2026-11-14",
+  "time": "19:45",
+  "party": 2,
+  "guest": "Mina Costa"
+}

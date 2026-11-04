@@ -1,0 +1,17 @@
+var/
+exports/*.pdf
+exports/*.ics
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+*.pem
+*.key
+*credentials*
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+

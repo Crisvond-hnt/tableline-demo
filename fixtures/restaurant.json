@@ -1,0 +1,26 @@
+{
+  "synthetic": true,
+  "restaurant": "Northline",
+  "timezone": "Europe/Lisbon",
+  "note": "Fictional restaurant. Rules marked unknown were not observed. Do not treat them as a real venue's policy.",
+  "rules": {
+    "opening_hours": "unknown",
+    "service_windows": "unknown",
+    "party_size_limit": "unknown",
+    "turn_time_minutes": "unknown",
+    "buffers": "unknown",
+    "closed_dates": "unknown",
+    "table_constraints": "unknown",
+    "service_areas": "unknown",
+    "capacities": "unknown",
+    "approval_roles": "unknown",
+    "sources": "unknown",
+    "daily_output": "unknown"
+  },
+  "mailbox": {
+    "allowed_from_domains": ["notify.example.test"],
+    "subject_pattern": "^Reservation (new|edited|cancelled): (NL-[0-9]+)$",
+    "note": "This pattern matches the synthetic fixtures only. A real notice sender and subject are unverified."
+  },
+  "acknowledgment_enabled": false
+}

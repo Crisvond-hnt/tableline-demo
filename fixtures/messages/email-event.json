@@ -1,0 +1,12 @@
+{
+  "synthetic": true,
+  "live": false,
+  "channel": "email",
+  "provider": "fixture",
+  "thread_id": "mail-thread-77",
+  "message_id": "mail-msg-77",
+  "received_at": "2026-11-14T17:30:00+00:00",
+  "guest_name": "Lee Okonkwo",
+  "subject": "Wedding dinner in December",
+  "text": "Hello, we are looking at a wedding dinner for about 40 people in December. Are you able to host a private event?"
+}

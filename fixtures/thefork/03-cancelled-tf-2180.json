@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "live": false,
+  "provider": "thefork",
+  "fixture_contract": "tableline-thefork-fixture-v1",
+  "note": "Written for the demo. Not a body from api.thefork.io.",
+  "provider_event_id": "tf-evt-2180-cancelled",
+  "kind": "cancelled",
+  "reservation_id": "TF-2180",
+  "received_at": "2026-11-14T16:45:00+00:00",
+  "service_date": "2026-11-14",
+  "time": "18:00",
+  "party": 3,
+  "guest": "Paulo Mendes"
+}

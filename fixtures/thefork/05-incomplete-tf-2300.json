@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "live": false,
+  "provider": "thefork",
+  "fixture_contract": "tableline-thefork-fixture-v1",
+  "note": "Party size left out so the adapter can hold it for staff.",
+  "provider_event_id": "tf-evt-2300-incomplete",
+  "kind": "created",
+  "reservation_id": "TF-2300",
+  "received_at": "2026-11-14T16:50:00+00:00",
+  "service_date": "2026-11-14",
+  "time": "18:30",
+  "guest": "Ines Carvalho"
+}

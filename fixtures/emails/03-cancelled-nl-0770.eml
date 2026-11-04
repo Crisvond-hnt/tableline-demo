@@ -1,0 +1,16 @@
+From: Reservation notices <reservations@notify.example.test>
+To: staff@northline.example.test
+Subject: Reservation cancelled: NL-0770
+Message-ID: <cancelled-nl-0770@notify.example.test>
+Date: Sat, 14 Nov 2026 16:30:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Synthetic stand-in. Not a UMAI message.
+
+Restaurant: Northline
+Reservation: NL-0770
+Status: cancelled
+Date: 2026-11-14
+Time: 21:30
+Party: 2
+Guest: Idris Cole

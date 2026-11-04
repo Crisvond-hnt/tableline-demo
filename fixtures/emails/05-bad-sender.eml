@@ -1,0 +1,14 @@
+From: Someone Else <person@evil.example>
+To: staff@northline.example.test
+Subject: Reservation new: NL-1999
+Message-ID: <bad-sender@evil.example>
+Date: Sat, 14 Nov 2026 16:40:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Restaurant: Northline
+Reservation: NL-1999
+Status: new
+Date: 2026-11-14
+Time: 18:00
+Party: 2
+Guest: Should Not Import

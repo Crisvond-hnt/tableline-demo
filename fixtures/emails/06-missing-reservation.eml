@@ -1,0 +1,12 @@
+From: Reservation notices <reservations@notify.example.test>
+To: staff@northline.example.test
+Subject: Reservation new: NL-2001
+Message-ID: <missing-fields@notify.example.test>
+Date: Sat, 14 Nov 2026 16:45:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Restaurant: Northline
+Status: new
+Date: 2026-11-14
+Time: 18:00
+Party: 2

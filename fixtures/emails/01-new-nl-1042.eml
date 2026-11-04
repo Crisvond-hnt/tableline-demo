@@ -1,0 +1,16 @@
+From: Reservation notices <reservations@notify.example.test>
+To: staff@northline.example.test
+Subject: Reservation new: NL-1042
+Message-ID: <new-nl-1042@notify.example.test>
+Date: Sat, 14 Nov 2026 16:10:00 +0000
+Content-Type: text/plain; charset=utf-8
+
+Synthetic stand-in. Not a UMAI message.
+
+Restaurant: Northline
+Reservation: NL-1042
+Status: new
+Date: 2026-11-14
+Time: 18:30
+Party: 2
+Guest: Ada North

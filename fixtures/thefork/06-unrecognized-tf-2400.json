@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "live": false,
+  "provider": "thefork",
+  "fixture_contract": "tableline-thefork-fixture-v1",
+  "note": "A kind this demo does not know how to apply.",
+  "provider_event_id": "tf-evt-2400-unknown",
+  "kind": "waitlist",
+  "reservation_id": "TF-2400",
+  "received_at": "2026-11-14T16:55:00+00:00",
+  "service_date": "2026-11-14",
+  "time": "22:00",
+  "party": 2,
+  "guest": "Rui Santos"
+}

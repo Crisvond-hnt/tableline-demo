@@ -1,0 +1,11 @@
+{
+  "synthetic": true,
+  "live": false,
+  "channel": "instagram",
+  "provider": "fixture",
+  "thread_id": "ig-thread-4408",
+  "message_id": "ig-msg-4408",
+  "received_at": "2026-11-14T17:20:00+00:00",
+  "guest_name": "Sam Ibarra",
+  "text": "Can we come tonight?"
+}

@@ -1,0 +1,172 @@
+# Northline reservations.
+# One private room. The creator is the only person in it.
+# The coordinator runs the commands. Its ledger is a file in its own folder.
+# All three agents answer the owner and the owner's agents. Invited staff can read.
+version: 1
+
+params:
+  team:
+    type: string
+    description: Short name for this restaurant team. It prefixes the agents and the channel.
+    pattern: "[a-z][a-z0-9-]*"
+  repository:
+    type: string
+    label: Repository
+    description: Git URL of this Tableline repository. Only the coordinator clones it, into its own folder, if the fixtures are not already there.
+  provider:
+    type: provider
+    description: Claude Code, Codex, or OpenCode. The first of these installed on the server is used until you change it.
+    default: [claude, codex, opencode]
+  location:
+    type: location
+    description: Where the agents run. local is this computer. Change it if the server uses another machine.
+    default: local
+    input: advanced
+  bridge:
+    type: bridge
+    description: The messaging app already connected on this server. Pick it here. Telegram cannot create the channel.
+
+agents:
+  - name: "{team}-coordinator"
+    description: Runs every Tableline command and posts the result. Does not claim a live booking.
+    addressing: owner-agents
+    provider: "{provider}"
+    location: "{location}"
+    directory: "{$agents_dir}/{team}-coordinator"
+    repo: "{repository}"
+    auto_mode: false
+    auto_approve: false
+    instructions: |
+      You are the only agent who runs Tableline commands. Your ledger is
+      var/store.json in your own folder. The other agents have different
+      folders and must not run these commands.
+
+      Read GUIDE.md and fixtures/restaurant.json. If this folder has no
+      fixtures directory, clone the repository URL you were given before
+      anything else. The fixtures are synthetic.
+
+      Post every answer with post_message, in the thread of the message
+      you are answering. Text you do not post is shown to nobody.
+
+      Reply in the thread with the command's result. Say the request id,
+      the class, and what is missing. An availability result is a snapshot
+      plus the notice feed, not a live read. Do not name another guest.
+      When a slot is withheld, quote the reservation ids the result names.
+      APPROVE reads the snapshot and the notice feed again, then checks
+      that the slot is still offered. REFERENCE checks the shape of the id
+      against this folder's store and snapshot. It does not read UMAI. The
+      command does not check who typed it; Switch lets only the owner
+      instruct you. The confirmation and the event reply are simulated
+      sends. Ask before every command.
+  - name: "{team}-booking"
+    description: Advises on the coordinator's posted availability result. Does not run commands.
+    addressing: owner-agents
+    provider: "{provider}"
+    location: "{location}"
+    directory: "{$agents_dir}/{team}-booking"
+    auto_mode: false
+    auto_approve: false
+    instructions: |
+      You advise. Do not run python, do not clone anything, and do not
+      write a reservation. Take the booking-writer job and hold it.
+      Post every answer with post_message, in the thread of the message
+      you are answering. Text you do not post is shown to nobody.
+
+      Read what the coordinator posted. Quote the conflict reservation id
+      and the offered time. Do not name another guest. If the owner names
+      a slot, say whether it matches an offered time in that post. Say
+      that REFERENCE, when the coordinator runs it, only checks the local
+      store and snapshot. It does not read UMAI. Ask before every action.
+  - name: "{team}-guest"
+    description: Advises on whether a posted send is allowed. Does not run commands.
+    addressing: owner-agents
+    provider: "{provider}"
+    location: "{location}"
+    directory: "{$agents_dir}/{team}-guest"
+    auto_mode: false
+    auto_approve: false
+    instructions: |
+      You advise. Do not run python, do not clone anything, and do not
+      send anything to a guest yourself. Take the guest-sender job and
+      hold it. Post every answer with post_message, in the thread of the
+      message you are answering. Text you do not post is shown to nobody.
+
+      A table reply is allowed only after the coordinator has posted
+      reference_recorded_locally. An event reply is allowed only after
+      the coordinator has posted the draft and the owner has named a
+      follow-up date. Say that the send is simulated and was not delivered.
+      A recorded reference was not read back from a booking system.
+      Ask before every action.
+
+room:
+  name: "{team}-reservations"
+  description: One room for incoming reservation requests and event inquiries.
+  bridge: "{bridge}"
+  channel_type: channel_private
+  agents: ["{team}-coordinator", "{team}-booking", "{team}-guest"]
+  users: ["{$creator}"]
+  aliases:
+    "{team}-coordinator": coordinator
+    "{team}-booking": booking
+    "{team}-guest": guest
+  roles:
+    - name: booking-writer
+      exclusive: true
+      instructions: |
+        Quote the snapshot time and the conflict from the coordinator's
+        post. Do not run a command and do not write a reservation. The
+        owner names the slot. The coordinator records it.
+    - name: guest-sender
+      exclusive: true
+      instructions: |
+        Say whether a guest send is allowed from the coordinator's post.
+        Do not run a command. A local reference is not a booking read
+        back from the reservation system.
+  instructions: |
+    This room has one job: take a guest request through to a decision
+    recorded against the restaurant's existing bookings.
+
+    The coordinator is the only agent who runs commands. The booking
+    agent and the guest agent advise from the coordinator's posts. They
+    do not share the coordinator's folder.
+
+    All three agents answer the owner and the owner's agents. Switch
+    enforces that through each agent's addressing. This room starts with
+    the person who created it. Other staff are not members until someone
+    invites them, and inviting them lets them read, not instruct.
+
+    APPROVE and REFERENCE are checks in the coordinator's folder. Switch
+    does not parse those words. The commands do not check who ran them;
+    the addressing above is what keeps them to the owner. APPROVE reads
+    the notice feed again before it accepts a slot. A reference that
+    passes is a local note, not a UMAI read.
+    Do not tell a guest a table is confirmed in the booking system.
+    Do not cancel a reservation from this room.
+  docs:
+    - name: integration
+      description: What is connected, simulated, or refused
+      instructions: Quote this before you claim a system was updated.
+      content: |
+        UMAI has no public API on https://www.umai.io/. The restaurant can send new, canceled, and edited email notices. The real message body was not verified, so the demo parses a synthetic contract only.
+        TheFork documents a partner B2B API at https://docs.thefork.io/B2B-API/introduction. This room does not call it. The demo reads fixtures/thefork.
+        OpenTable documents partner APIs at https://docs.opentable.com/. Access depends on approval. This room has no OpenTable client and no OpenTable fixture.
+        Instagram, guest email, and website forms are fixtures or absent. Confirmation records a simulated send.
+        The daily PDF and the .ics file come from the snapshot and this folder's records.
+    - name: approval
+      description: What APPROVE and REFERENCE check
+      instructions: Use these limits. Do not describe a reference as verified with the booking system.
+      content: |
+        APPROVE reads the snapshot and every accepted notice again, then checks that the date, time, and party are still offered. A notice that arrived after the offer can refuse it.
+        A slot is offered only if the house lists it, the party fits its maximum, and nothing on the feed covers it.
+        REFERENCE checks that the id matches NL- plus digits and is not already in this local store, snapshot, or cancel feed.
+        Neither command checks who typed it; only the owner can instruct the coordinator. Neither command contacts UMAI.
+        The coordinator then records a simulated guest send.
+        An event reply is the stored draft, plus a follow-up date the owner names.
+
+kickoff: |
+  @{team}-coordinator this is the reservations room. In one line, say
+  that you alone run the commands, and that a reference is a local note.
+  @{team}-booking take the booking-writer job. In one line, say that you
+  advise from the coordinator's post and do not run commands.
+  @{team}-guest take the guest-sender job. In one line, say that you
+  advise on simulated sends and do not run commands.
