@@ -63,24 +63,24 @@ Open the channel in Mattermost or in Switch Console; both show the same conversa
 All three agents answer only the person who created the room and that person's agents. If the coordinator replies `I only take instructions from my owner`, your Mattermost account is not linked to your Switch user yet: in Switch Console, open the server's **Home** page, link the account under **Messaging apps**, and send the line again. Do not widen the agent's addressing to get past it; the restriction is what keeps APPROVE to the owner.
 
 ```text
-@northline-coordinator run python3 -m integrations demo and post the result.
+@northline-coordinator Mara wants four people tonight at 8. Can we take it?
 ```
 
-It should name the conflict with NL-0881, show an empty offered list, 21:30 in the withheld slots, and the refusal that names NL-1042 and TF-2201. The first time, the coordinator clones the repository into its own folder before it runs anything.
+The reply should sound like a person, not a log. Mara at 8 is taken by NL-0881, seated from 7:30 to 9. 9:30 is not offered, because NL-1042 and TF-2201 have no finish time. Nothing was written and Mara was not told. The first time, the coordinator clones the repository into its own folder before it answers.
 
 The template creates the agents with Auto mode off, so the agent posts a permission request in the thread before each command, including the clone and every file it reads while it learns the repository. Answer each with **Approve** on the request itself; a typed reply such as `A1 1` is also forwarded to the agent as a message. On Claude Code or Codex you can instead open the coordinator's page under **Your Agents** and turn on **Auto mode**: the provider's own review then runs reads and the Tableline commands in the agent's folder without asking, and the owner's word in the room stays the gate for `approve`, `reference`, and `confirm`. Leave Auto mode off on OpenCode, where it approves everything. Do not turn on **Bypass permissions**.
 
 ```text
-@northline-coordinator run python3 -m integrations ingest, then python3 -m integrations review, and tell me what was held.
-@northline-booking what do you make of the coordinator's result?
-@northline-guest may anything be sent to the guest right now?
+@northline-booking What would you do?
+@northline-guest Can we reply to her?
+@northline-coordinator What did you hold back?
 ```
 
 `review` reads the ledger in the coordinator's folder, and `demo` leaves nothing there, so `ingest` comes first. On the fixture feed it holds four items: `05-bad-sender.eml`, `06-missing-reservation.eml`, and two TheFork events, one missing its party and one of an unrecognized kind.
 
 The booking and guest agents answer from the coordinator's post. They do not run commands and they do not hold the ledger.
 
-For the approval path on the narrower feed, first ask the coordinator to delete `var/store.json`, then to run the Part 1 commands in order, from `ingest-mail fixtures/emails/03-cancelled-nl-0770.eml` through `confirm`, and to post each result. Say APPROVE with the date, time, and party yourself before the `approve` step; the coordinator does not choose the slot. The reference NL-2044 is recorded locally and the guest text is stored as simulated.
+The approval above is a different night from the full sheet. Say it as its own request, and name the date, the time, and the party yourself. The coordinator does not choose the slot. NL-2044 is a note in the room. The reply to the guest is a draft and is not sent.
 
 Useful room commands: `!list-agents` shows the three agents are members, `!agents-status` shows their sessions, `!roles` shows `booking-writer` and `guest-sender`, `!list-documents` shows the `integration` and `approval` room documents.
 

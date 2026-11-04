@@ -226,6 +226,14 @@ class TablelineTests(unittest.TestCase):
         self.assertEqual(payload["result"]["withheld_slots"][0]["time"], "21:30")
         self.assertIn("21:30 is withheld", payload["result"]["approve_21_30"])
         self.assertGreater(payload["result"]["held_for_review"], 0)
+        said = payload["say"]
+        self.assertIn("8 o'clock", said)
+        self.assertIn("NL-0881", said)
+        self.assertIn("NL-1042", said)
+        self.assertIn("TF-2201", said)
+        self.assertNotIn("Jonah", said)
+        self.assertNotIn("python", said.lower())
+        self.assertNotIn("{", said)
         self.assertFalse((ROOT / "var" / "store.json").exists())
 
     def test_ledgers_stay_in_the_directory_that_wrote_them(self) -> None:

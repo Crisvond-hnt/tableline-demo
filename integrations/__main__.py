@@ -15,6 +15,7 @@ from integrations.mailbox import ingest_file as ingest_mail_file
 from integrations.pdf import build_pdf
 from integrations.store import Store, store_path
 from integrations.thefork import ingest_dir as ingest_thefork
+from integrations.speak import speak, speak_error
 from integrations.workflow import (
     WorkflowError,
     approve,
@@ -67,9 +68,9 @@ def main(argv=None) -> int:
     try:
         payload = _run(args)
     except WorkflowError as error:
-        print(json.dumps({"ok": False, "error": error.code}))
+        print(json.dumps({"ok": False, "error": error.code, "say": speak_error(error.code)}))
         return 1
-    print(json.dumps({"ok": True, "result": payload}, indent=2))
+    print(json.dumps({"ok": True, "say": speak(args.command, payload), "result": payload}, indent=2))
     return 0
 
 
