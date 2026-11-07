@@ -101,7 +101,6 @@ The sample leaves hours, service windows, party size, turn time, buffers, closed
 ## Where to read next
 
 - `docs/SERVER_SETUP.md` covers Switch Console from a fresh install.
-- `demo/SCRIPT.md` is the order the recording follows.
 - `GUIDE.md` is how the three agents speak in the room.
 - `docs/schema.md` and `docs/lifecycle.md` are the event and request shapes.
 - `integrations/README.md` is what each module does.
